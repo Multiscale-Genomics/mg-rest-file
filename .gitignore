@@ -1,0 +1,6 @@
+*.pyc
+*.json
+.python-version
+*.cnf
+.cache
+*_build
