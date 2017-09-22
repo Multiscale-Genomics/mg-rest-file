@@ -355,6 +355,7 @@ class Ping(Resource):
 # things can be redirected to the raw files for use as a track.
 #
 
+sys._auth_meta_json = os.path.dirname(os.path.realpath(__file__)) + '/auth_meta.json'
 
 # Define the URIs and their matching methods
 REST_API = Api(APP)
