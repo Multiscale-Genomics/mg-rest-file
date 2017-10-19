@@ -30,7 +30,7 @@ from reader.bigwig import bigwig_reader
 #from reader.tabix import tabix_reader
 from reader.hdf5_reader import hdf5_reader
 
-from rest.mg_auth import authorized
+from mg_rest_util.mg_auth import authorized
 
 APP = Flask(__name__)
 #logging.basicConfig()
