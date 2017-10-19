@@ -271,7 +271,8 @@ class FileRegion(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET http://localhost:5002/mug/api/dmp/file/region?file_id=test_file&chrom=1&start=1000&end=2000
+           curl -X GET \
+              http://localhost:5002/mug/api/dmp/file/region?file_id=test_file&chrom=1&start=1000&end=2000
 
         """
         file_id = request.args.get('file_id')
