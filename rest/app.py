@@ -17,8 +17,8 @@
 
 from __future__ import print_function
 
-import json
 import os
+import sys
 #import logging
 
 from flask import Flask, Response, request, make_response
@@ -133,7 +133,7 @@ class EndPoints(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET http://localhost:5002/mug/api/dmp
+           curl -X GET http://localhost:5002/mug/api/dmp/file
 
         """
         return {
@@ -191,6 +191,7 @@ class File(Resource):
 
         """
         file_id = request.args.get('file_id')
+        public = request.args.get('public')
 
         params = [file_id]
 
@@ -199,10 +200,14 @@ class File(Resource):
             return help_usage(None, 200, ['file_id'], {})
 
         if user_id is not None:
-            dmp_api = _get_dm_api(user_id['user_id'])
+            selected_user_id = user_id['user_id']
+            if public is not None:
+                selected_user_id = user_id['public_id']
+
+            dmp_api = _get_dm_api(selected_user_id)
 
             print(user_id, file_id)
-            file_obj = dmp_api.get_file_by_id(user_id['user_id'], file_id)
+            file_obj = dmp_api.get_file_by_id(selected_user_id, file_id)
             print(file_obj)
 
             if file_obj is None or 'file_path' not in file_obj:
@@ -273,6 +278,7 @@ class FileRegion(Resource):
         chrom = request.args.get('chrom')
         start = request.args.get('start')
         end = request.args.get('end')
+        public = request.args.get('public')
 
         params = [file_id, chrom, start, end]
 
@@ -285,12 +291,19 @@ class FileRegion(Resource):
             return help_usage('MissingParameters', 400, ['file_id', 'chrom', 'start', 'end'], {})
 
         if user_id is not None:
-            dmp_api = _get_dm_api(user_id['user_id'])
+            selected_user_id = user_id['user_id']
+            if public is not None:
+                selected_user_id = user_id['public_id']
 
-            file_obj = dmp_api.get_file_by_id(user_id['user_id'], file_id, False)
+            dmp_api = _get_dm_api(selected_user_id)
+
+            file_obj = dmp_api.get_file_by_id(selected_user_id, file_id, False)
 
             if file_obj is None or 'file_path' not in file_obj:
-                return help_usage('MissingParameters', 400, ['file_id', 'chrom', 'start', 'end'], {})
+                return help_usage(
+                    'MissingParameters', 400,
+                    ['file_id', 'chrom', 'start', 'end'], {}
+                )
 
             params = [file_id, chrom, start, end]
 
@@ -359,6 +372,9 @@ sys._auth_meta_json = os.path.dirname(os.path.realpath(__file__)) + '/auth_meta.
 
 # Define the URIs and their matching methods
 REST_API = Api(APP)
+
+#   List the available end points for this service
+REST_API.add_resource(EndPoints, "/mug/api/dmp/file", endpoint='file_root')
 
 #   Get the data for a specific track
 REST_API.add_resource(FileRegion, "/mug/api/dmp/file/region", endpoint='region')
