@@ -15,9 +15,9 @@
    limitations under the License.
 """
 
-__rest_name__ = "DMP"
+__rest_name__ = "FileStreamer"
 __description__ = """
-Main process for providing access to the DMP
+File streaming service.
 """
 __version__ = "v0.0"
 __author__ = "Mark McDowall"
