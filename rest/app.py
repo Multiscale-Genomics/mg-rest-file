@@ -21,6 +21,9 @@ import os
 import sys
 #import logging
 
+# Required for ReadTheDocs
+from functools import wraps # pylint: disable=unused-import
+
 from flask import Flask, Response, request, make_response
 from flask_restful import Api, Resource
 
@@ -133,7 +136,7 @@ class EndPoints(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET http://localhost:5002/mug/api/dmp/file
+           curl -X GET http://localhost:5003/mug/api/dmp/file
 
         """
         return {
@@ -187,7 +190,7 @@ class File(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET http://localhost:5002/mug/api/dmp/file/whole?file_id=test_file
+           curl -X GET http://localhost:5003/mug/api/dmp/file/whole?file_id=test_file
 
         """
         file_id = request.args.get('file_id')
@@ -271,8 +274,7 @@ class FileRegion(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET \
-              http://localhost:5002/mug/api/dmp/file/region?file_id=test_file&chrom=1&start=1000&end=2000
+           curl -X GET http://localhost:5003/mug/api/dmp/file/region?file_id=test_file&chrom=1&start=1000&end=2000
 
         """
         file_id = request.args.get('file_id')
@@ -345,7 +347,7 @@ class Ping(Resource):
         .. code-block:: none
            :linenos:
 
-           curl -X GET http://localhost:5002/mug/api/dmp/ping
+           curl -X GET http://localhost:5003/mug/api/dmp/ping
 
         """
         import rest.release as release
