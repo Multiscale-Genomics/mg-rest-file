@@ -170,8 +170,6 @@ class File(Resource):
 
         Parameters
         ----------
-        user_id : str
-            User ID
         file_id : str
             Identifier of the file to retrieve data from
         region : str
@@ -256,12 +254,14 @@ class FileRegion(Resource):
 
         Parameters
         ----------
-        user_id : str
-            User ID
         file_id : str
             Identifier of the file to retrieve data from
-        region : str
-            <chromosome>:<start_pos>:<end_pos>
+        chrom : str
+            <chromosome>
+        start : int
+            Start position
+        end : int
+            End position
 
         Returns
         -------
