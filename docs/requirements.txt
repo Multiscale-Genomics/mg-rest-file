@@ -2,3 +2,4 @@ flask
 flask_restful
 waitress
 httplib2
+git+git://github.com/Multiscale-Genomics/mg-rest-util.git
