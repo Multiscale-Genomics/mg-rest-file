@@ -172,8 +172,6 @@ class File(Resource):
         ----------
         file_id : str
             Identifier of the file to retrieve data from
-        region : str
-            <chromosome>:<start_pos>:<end_pos>
         output : str
             Default is None. State 'original' to return the original whole file
 
